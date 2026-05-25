@@ -22,7 +22,11 @@ and the environment will be created in `.venv` by default. To modify the path of
 **External repo**: The mask generator depends to external repository, [SAM](https://github.com/facebookresearch/segment-anything.git) is used by default to generate more accurate mask. You add another segmentation models in `mask_generator/model_hub`.
 
 
-
+**🪄 START**: Just run
+```sh
+uv run uvicorn editonline.app:app --host 127.0.0.1 --port 8000
+```
+and the server will run locally on port `8000`.
 
 
 ## 🤓☝️ TODO
