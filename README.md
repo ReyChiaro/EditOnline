@@ -1,12 +1,24 @@
 # 🪄 EditOnline
 A WebUI for image editing, support mask-based and instruction-based editing.
 
+## 🐈 Features
+
+1. **MORE CONSISTENT** to use our pretrained LoRA.
+2. Both local deployed model and API is supported.
+3. Both instruction and mask editing is supported.
+4. Design your own masks and save it.
+
+<p float="left">
+  <img src="figs/panel-1.png" width="49%" />
+  <img src="figs/panel-2.png" width="49%" />
+</p>
+
 
 ## Quick Start
 
 > Python 3.14, diffusers 0.37.1 and torch 2.10 are preferred.
 
-**Environment Configurations**: This project use [uv](https://docs.astral.sh/uv/getting-started/installation/) to build the environment. The configuration file have been provided, see `pyproject.toml` for more details. Run
+- **Environment Configurations**: This project use [uv](https://docs.astral.sh/uv/getting-started/installation/) to build the environment. The configuration file have been provided, see `pyproject.toml` for more details. Run
 ```sh
 uv sync
 # Or uv sync --index-url other-source to enable synchronizing the environment from the specific source.
@@ -14,15 +26,15 @@ uv sync
 and the environment will be created in `.venv` by default. To modify the path of the environment, specify the env variable `UV_PROJECT_ENVIRONMENT` to your prefer path.
 
 
-**DiT and Pre-trained weights**: The base model is [QwenImage-Edit-2511](https://huggingface.co/Qwen/Qwen-Image-Edit-2511/tree/main), we provide a pre-trained LoRA for mask-based image editing. The weights will be released.
+- **DiT and Pre-trained weights**: The base model is [QwenImage-Edit-2511](https://huggingface.co/Qwen/Qwen-Image-Edit-2511/tree/main), we provide a pre-trained LoRA for mask-based image editing. The weights will be released.
 
 - To modify the path which the model will be loaded from, you can look [config](editonline/config.py) for more details.
 
 
-**External repo**: The mask generator depends to external repository, [SAM](https://github.com/facebookresearch/segment-anything.git) is used by default to generate more accurate mask. You add another segmentation models in `mask_generator/model_hub`.
+- **External repo**: The mask generator depends to external repository, [SAM](https://github.com/facebookresearch/segment-anything.git) is used by default to generate more accurate mask. You add another segmentation models in `mask_generator/model_hub`.
 
 
-**🪄 START**: Just run
+- **🪄 START**: Just run
 ```sh
 uv run uvicorn editonline.app:app --host 127.0.0.1 --port 8000
 ```
