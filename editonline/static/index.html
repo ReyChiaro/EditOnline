@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EditOnline</title>
+    <link rel="stylesheet" href="/static/app.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>EditOnline</h1>
+          <p data-i18n="subtitle">支持指令与 mask 的图像编辑工作台</p>
+        </div>
+        <div class="top-actions">
+          <button id="langBtn" type="button">EN</button>
+          <a href="/docs" target="_blank" rel="noreferrer">API</a>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="panel source-panel">
+          <div class="panel-title">
+            <h2 data-i18n="sourceTitle">图像输入</h2>
+            <span id="imageStatus" data-i18n="waitingImage">等待上传</span>
+          </div>
+          <label class="dropzone">
+            <input id="imageInput" type="file" accept="image/*" />
+            <strong data-i18n="uploadImage">上传源图像</strong>
+            <span data-i18n="uploadHint">PNG / JPG / WebP</span>
+          </label>
+          <div class="preview-frame">
+            <img id="sourcePreview" alt="" />
+          </div>
+        </section>
+
+        <section class="panel mask-panel">
+          <div class="panel-title">
+            <h2 data-i18n="maskTitle">Mask 工作区</h2>
+            <span id="maskStatus" data-i18n="maskEmpty">无 mask</span>
+          </div>
+          <div class="tool-row">
+            <div class="segmented">
+              <button class="active" type="button" data-tool="brush" data-i18n="brush">画笔</button>
+              <button type="button" data-tool="eraser" data-i18n="eraser">橡皮</button>
+              <button type="button" data-tool="fg" data-i18n="fgPoint">前景点</button>
+              <button type="button" data-tool="bg" data-i18n="bgPoint">背景点</button>
+            </div>
+            <label class="range-label">
+              <span data-i18n="brushSize">笔刷</span>
+              <input id="brushSize" type="range" min="4" max="120" value="36" />
+            </label>
+          </div>
+          <div class="canvas-wrap" id="canvasWrap">
+            <img id="canvasImage" alt="" />
+            <canvas id="maskCanvas"></canvas>
+            <div id="pointLayer" class="point-layer"></div>
+          </div>
+          <div class="button-row">
+            <button id="clearMaskBtn" type="button" data-i18n="clearMask">清空</button>
+            <button id="uploadMaskBtn" type="button" data-i18n="saveMask">保存 mask</button>
+            <button id="segmentBtn" type="button" data-i18n="segment">分割</button>
+          </div>
+          <div id="maskCandidates" class="mask-candidates"></div>
+        </section>
+
+        <section class="panel edit-panel">
+          <div class="panel-title">
+            <h2 data-i18n="editTitle">编辑参数</h2>
+            <span id="runStatus" data-i18n="idle">空闲</span>
+          </div>
+          <label>
+            <span data-i18n="prompt">指令</span>
+            <textarea id="prompt" rows="4" data-i18n-placeholder="promptPlaceholder"></textarea>
+          </label>
+          <label>
+            <span data-i18n="negativePrompt">负向指令</span>
+            <input id="negativePrompt" type="text" />
+          </label>
+          <div class="form-grid">
+            <label>
+              <span data-i18n="editProvider">编辑模型</span>
+              <select id="editProvider">
+                <option value="local">Local</option>
+                <option value="api">API</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="maskProvider">分割模型</span>
+              <select id="maskProvider">
+                <option value="local">Local</option>
+                <option value="api">API</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="steps">步数</span>
+              <input id="steps" type="number" min="1" max="200" value="50" />
+            </label>
+            <label>
+              <span data-i18n="device">设备</span>
+              <input id="device" type="text" value="cuda:0" />
+            </label>
+          </div>
+          <div class="checks">
+            <label><input id="maskBlur" type="checkbox" checked /> <span data-i18n="maskBlur">Mask 模糊</span></label>
+            <label><input id="maskDilation" type="checkbox" checked /> <span data-i18n="maskDilation">Mask 膨胀</span></label>
+            <label><input id="maskBox" type="checkbox" /> <span data-i18n="maskBox">转为外接框</span></label>
+          </div>
+          <div class="form-grid">
+            <label>
+              <span data-i18n="blurKernel">模糊核</span>
+              <input id="blurKernel" type="number" min="1" max="501" value="75" />
+            </label>
+            <label>
+              <span data-i18n="dilationKernel">膨胀核</span>
+              <input id="dilationKernel" type="number" min="1" max="501" value="75" />
+            </label>
+            <label>
+              <span data-i18n="boxMargin">框边距</span>
+              <input id="boxMargin" type="number" min="0" max="2048" value="200" />
+            </label>
+          </div>
+          <button id="runBtn" class="primary" type="button" data-i18n="runEdit">开始编辑</button>
+        </section>
+
+        <section class="panel result-panel">
+          <div class="panel-title">
+            <h2 data-i18n="resultTitle">结果</h2>
+            <span id="resultStatus" data-i18n="noResult">暂无结果</span>
+          </div>
+          <div class="result-grid">
+            <figure>
+              <img id="outputPreview" alt="" />
+              <figcaption data-i18n="outputImage">输出图</figcaption>
+            </figure>
+            <figure>
+              <img id="visPreview" alt="" />
+              <figcaption data-i18n="visualization">可视化</figcaption>
+            </figure>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
+

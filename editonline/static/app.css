@@ -1,0 +1,374 @@
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --ink: #263238;
+  --muted: #6c7a86;
+  --line: #dce9e5;
+  --mint: #4fc08d;
+  --mint-soft: #e9f8f1;
+  --pink: #ff6fae;
+  --yellow: #ffe8a3;
+  --blue: #65a8ff;
+  --panel: #fbfffd;
+  --shadow: 0 12px 36px rgba(38, 50, 56, 0.08);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  min-height: 38px;
+  padding: 0 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+button:hover,
+a:hover {
+  border-color: var(--mint);
+  background: var(--mint-soft);
+}
+
+.app-shell {
+  width: min(1480px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 24px 0 40px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 10px 0 22px;
+}
+
+h1,
+h2,
+p,
+figure {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+}
+
+.topbar p,
+.panel-title span,
+label span,
+figcaption,
+.dropzone span {
+  color: var(--muted);
+}
+
+.top-actions,
+.button-row,
+.tool-row,
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(360px, 1.2fr) minmax(320px, 0.9fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.result-panel {
+  grid-column: 1 / -1;
+}
+
+.panel-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+.dropzone {
+  min-height: 120px;
+  border: 1px dashed var(--mint);
+  border-radius: 8px;
+  background: var(--mint-soft);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.dropzone input {
+  display: none;
+}
+
+.preview-frame,
+.canvas-wrap,
+.result-grid figure {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(45deg, #f6fbf8 25%, transparent 25%),
+    linear-gradient(-45deg, #f6fbf8 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #f6fbf8 75%),
+    linear-gradient(-45deg, transparent 75%, #f6fbf8 75%);
+  background-size: 18px 18px;
+  background-position: 0 0, 0 9px, 9px -9px, -9px 0;
+  overflow: hidden;
+}
+
+.preview-frame {
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+}
+
+.preview-frame img,
+.result-grid img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+.canvas-wrap {
+  position: relative;
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+}
+
+.canvas-wrap img,
+.canvas-wrap canvas {
+  max-width: 100%;
+  max-height: min(62vh, 720px);
+  display: block;
+}
+
+.canvas-wrap canvas,
+.point-layer {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+.point-layer {
+  pointer-events: none;
+}
+
+.point {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 1px 4px rgba(38, 50, 56, 0.28);
+}
+
+.point.fg {
+  background: var(--mint);
+}
+
+.point.bg {
+  background: var(--pink);
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.segmented button {
+  border: 0;
+  border-radius: 0;
+  min-width: 0;
+}
+
+.segmented button.active {
+  background: var(--mint);
+  color: #fff;
+}
+
+.range-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+label {
+  display: grid;
+  gap: 7px;
+}
+
+input,
+select,
+textarea {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  min-height: 38px;
+  padding: 8px 10px;
+  width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.checks {
+  margin-top: 12px;
+}
+
+.checks label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.checks input {
+  width: auto;
+  min-height: 0;
+}
+
+.primary {
+  width: 100%;
+  margin-top: 14px;
+  background: var(--mint);
+  border-color: var(--mint);
+  color: #fff;
+  font-weight: 700;
+}
+
+.mask-candidates {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.mask-candidates button {
+  padding: 4px;
+  aspect-ratio: 1 / 1;
+}
+
+.mask-candidates img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.result-grid figure {
+  min-height: 320px;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  place-items: center;
+}
+
+figcaption {
+  width: 100%;
+  padding: 10px 12px;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.84);
+}
+
+@media (max-width: 1100px) {
+  .workspace {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .edit-panel {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    width: min(100vw - 20px, 680px);
+    padding-top: 14px;
+  }
+
+  .topbar,
+  .panel-title {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .workspace,
+  .form-grid,
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .segmented {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .canvas-wrap {
+    min-height: 280px;
+  }
+}
+
