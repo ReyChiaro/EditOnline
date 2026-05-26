@@ -42,7 +42,7 @@ and the server will run locally on port `8000`, open the website and you will ge
 
 ![panel](figs/panel.png)
 
-Then you can upload your own image and draw/auto-segment/semi-segment a mask for localization, then tell the pipeline how to edit via an edit prompt on the left.
+Then you can upload your own image and draw/auto-segment/semi-segment a mask for localization, then tell the pipeline how to edit via an edit prompt on the right.
 
 - <u>Draw a mask</u>: the panel support to draw a mask via mouse brush
 - <u>Auto-segment</u>: invoke a segmentation model (default SAM) to generate a set of segmentations
@@ -54,3 +54,7 @@ Then you can upload your own image and draw/auto-segment/semi-segment a mask for
 - [x] Release EditOnline framework
 - [ ] Release mask-based editing LoRA weights
 - [ ] Support API query
+
+## 🤗 Contributors
+
+- The mask generator part is finished by [@Shunzi Yang](https://github.com/Michael20070814)
