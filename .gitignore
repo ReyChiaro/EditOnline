@@ -225,3 +225,5 @@ __marimo__/
 
 # EditOnline runtime artifacts
 runtime/
+
+.DS_Store
